@@ -7,11 +7,15 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
 
+    public static PlayerController instance;
+
     public float runSpeed = 5f;
 
     public float collisionOffset = .05f;
 
     public ContactFilter2D contactFilter;
+
+    public bool canTakeInput;
 
     Vector2 movementInput;
     Rigidbody2D rb;
@@ -25,6 +29,11 @@ public class PlayerController : MonoBehaviour
     const int LEFT = -1;
 
     List<RaycastHit2D> castCollision = new List<RaycastHit2D>();
+
+    private void Awake()
+    {
+        instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -62,6 +71,38 @@ public class PlayerController : MonoBehaviour
         }
         
         anim.SetFloat("Speed", movementInput.sqrMagnitude);
+    }
+
+    void OnFire()
+    {
+        
+        //if(canTakeInput)
+        //{
+            if (anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Down_Transition1" || anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Right_Transition" ||
+            anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Left_Transition1" || anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Up_Transition1" ||
+            anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Punch_Down1" || anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Punch_Right1" ||
+            anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Punch_Left1" || anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Punch_Up1")
+            {
+                anim.SetTrigger("Punch2");
+                canTakeInput = false;
+            }
+            else if (anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Down_Transition2" || anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Right_Transition2" ||
+            anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Left_Transition2" || anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Up_Transition2" ||
+            anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Punch_Down2" || anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Punch_Right2" ||
+            anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Punch_Left2" || anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Punch_Up2")
+            {
+                anim.SetTrigger("Punch3");
+                canTakeInput = false;
+            }
+            else if (anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Idle_Back" || anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Idle_Front" ||
+                anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Idle_Right" || anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Idle_Left")
+            {
+                anim.SetTrigger("Punch1");
+                canTakeInput = false;
+            }
+        //}
+        
+        
     }
 
 }

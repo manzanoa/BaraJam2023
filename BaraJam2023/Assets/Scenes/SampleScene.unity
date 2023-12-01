@@ -607,4 +607,5 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  canTakeInput: 1
   anim: {fileID: 2044469510}
